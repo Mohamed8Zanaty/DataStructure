@@ -42,13 +42,24 @@ public:
             curr = next;
         }
     }
-    void add(T data) {
+    void push_back(T data) {
         Node* newNode = new Node(data, nullptr);
         if (head == nullptr) {
             head = newNode;
         }
         else {
             end()->next = newNode;
+        }
+        _size++;
+    }
+    void push_front(T data) {
+        Node* newNode = new Node(data, nullptr);
+        if (head == nullptr) {
+            head = newNode;
+        }
+        else {
+            newNode->next = head;
+            head = newNode;
         }
         _size++;
     }
@@ -144,6 +155,37 @@ public:
         return _get(index)->data;
     }
 
+    void clear() {
+        Node* curr = head;
+        while (curr) {
+            Node* next = curr->next;
+            delete curr;
+            curr = next;
+        }
+        head = nullptr;
+        _size = 0;
+    }
+    [[nodiscard]] bool empty() const {
+        return !_size;
+    }
+    T front() const {
+        if (_size == 0) {
+            throw std::out_of_range("Empty list");
+        }
+        return head->data;
+    }
+    T back() {
+        if (_size == 0) {
+            throw std::out_of_range("Empty list");
+        }
+        return end()->data;
+    }
+    Node* begin()  {
+        if (_size == 0) {
+            throw std::out_of_range("Empty list");
+        }
+        return head;
+    }
 };
 
 
